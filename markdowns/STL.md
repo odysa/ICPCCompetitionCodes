@@ -78,3 +78,36 @@ pair<double, double> p;
 cin >> p.first >> p.second;
 //pair先比较first，再比较second,自带预算符
 ```
+# Queue
+```cpp
+q.push(x);  //  入队列
+q.pop();    //  出队列
+q.front();  //  访问队首元素
+q.back();   //  访问队尾元素
+q.empty();  //  判断队列是否为空
+q.size();   //  访问队列中的元素个数
+```
+# Priority Queue
+```cpp
+priority_queue<int> q;
+priority_queue<pair<int, int> > qq;                 //  注意在两个尖括号之间一定要留空格，防止误判
+priority_queue<int, vector<int>, greater<int> > qqq;//  定义小的先出队列
+q.empty()     //  如果队列为空，则返回true，否则返回false
+q.size()      //  返回队列中元素的个数
+q.pop()       //  删除队首元素，但不返回其值
+q.top()       //  返回具有最高优先级的元素值，但不删除该元素
+q.push(item)  //  在基于优先级的适当位置插入新元素
+
+class T
+{
+public:
+    int x, y, z;
+    T(int a, int b, int c) : x(a), y(b), z(c) {}
+};
+
+bool operator < (const T &tOne, const T &tTwo)
+{
+    return tOne.z < tTwo.z;  //  按照z的顺序来决定tOne和tTwo的顺序
+}
+priority_queue<T> q;
+```
