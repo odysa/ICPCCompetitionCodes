@@ -1,0 +1,52 @@
+#include<bits/stdc++.h>
+#define maxn 1000006
+using namespace std;
+int a[maxn];
+int Belong[maxn];
+int n,m,Size,num=0;
+int cnt[maxn];
+struct query{
+    int l,r,id;
+	friend bool operator < (query a,query b){ return a.l/Size==b.l/Size?a.r<b.r:a.l<b.l;}
+}q[maxn];
+
+int cmp(query a,query b){
+    return Belong[a.l]==Belong[b.l]?a.l<b.l:Belong[a.l]<Belong[b.l];//二选一
+    return (Belong[a.l] ^ Belong[b.l]) ? Belong[a.l] < Belong[b.l] : ((Belong[a.l] & 1) ? a.r < b.r : a.r > b.r);
+}
+
+inline void add(int pos)
+{
+    int *p=&a[pos];
+    if((++cnt[*p])==1) ++num;
+}
+inline void dell(int pos)
+{
+    int *p=&a[pos];
+    if(!(--cnt[*p])) --num;
+}
+int main()
+{
+    scanf("%d",&n);
+    Size=sqrt(n);
+    int bnum=ceil((double)n/Size);
+    for(int i=1;i<=bnum;++i)
+     for(int j=(i-1)*Size+1;j<=i*Size;++j)
+      Belong[j]=i;
+    for(int i=1;i<=n;++i) scanf("%d",&a[i]);
+    scanf("%d",&m);
+    for(int i=1;i<=m;++i) scanf("%d%d",&q[i].l,&q[i].r),q[i].id=i;
+    sort(q+1,q+m+1);
+    int l=0,r=0;
+    int ans[maxn];
+    for(int i=1;i<=m;++i)
+    {
+        int ql=q[i].l,qr=q[i].r,id=q[i].id;
+        while(l<ql) num-=!--cnt[a[l++]];
+        while(l>ql) num+=!cnt[a[--l]]++;
+        while(r<qr) num+=!cnt[a[++r]]++;
+        while(r>qr) num-=!--cnt[a[r--]];
+        ans[id]=num;
+    }
+    for(int i=1;i<=m;++i) printf("%d\n",ans[i]);
+}

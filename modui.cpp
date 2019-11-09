@@ -5,7 +5,7 @@
 #include<cstdio>
 #include<cmath>
 #define maxn 100000
-#define size 200010
+#define size 1000010
 using namespace std;
 int tmp;
 struct node
